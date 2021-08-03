@@ -109,7 +109,7 @@ export class Actor implements ActorLike, Patchable<ActorLike> {
 	private _appearance = new Appearance(this);
 	private _light: Light;
 	private _rigidBody: RigidBody;
-	private _collider: Collider;
+	public _collider: Collider;
 	private _text: Text;
 	private _attachment: Attachment;
 	private _lookAt: LookAt;
@@ -473,17 +473,17 @@ export class Actor implements ActorLike, Patchable<ActorLike> {
 
 	public setCollider(
 		colliderType: ColliderType,
-		// collisionLayer: CollisionLayer,
 		isTrigger: boolean,
 		size?: number | Vector3Like,
-		center = { x: 0, y: 0, z: 0 } as Vector3Like
+		center = { x: 0, y: 0, z: 0 } as Vector3Like,
+		layer = CollisionLayer.Default,
 	): void {
 		const colliderGeometry = this.generateColliderGeometry(colliderType, size, center);
 		if (colliderGeometry) {
 			this._setCollider({
 				enabled: true,
 				isTrigger,
-				// collisionLayer,
+				layer,
 				geometry: colliderGeometry
 			} as ColliderLike);
 		}
